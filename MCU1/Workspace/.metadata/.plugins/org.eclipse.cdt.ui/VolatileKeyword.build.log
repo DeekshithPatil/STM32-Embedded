@@ -1,0 +1,10 @@
+23:32:10 **** Incremental Build of configuration Debug for project VolatileKeyword ****
+make -j4 all 
+arm-none-eabi-size   VolatileKeyword.elf 
+   text	   data	    bss	    dec	    hex	filename
+    712	      8	   1568	   2288	    8f0	VolatileKeyword.elf
+Finished building: default.size.stdout
+ 
+
+23:32:11 Build Finished. 0 errors, 0 warnings. (took 471ms)
+

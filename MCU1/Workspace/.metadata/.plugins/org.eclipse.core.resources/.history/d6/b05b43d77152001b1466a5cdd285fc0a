@@ -1,0 +1,62 @@
+/*
+ * stm32f446xx.h
+ *
+ *  Created on: Jan 5, 2021
+ *      Author: DELL
+ */
+
+#ifndef INC_STM32F446XX_H_
+#define INC_STM32F446XX_H_
+
+/*
+ * Base address of Flash and SRAM1 memories
+ */
+#define FLASH_BASEADDR					0x08000000U
+#define SRAM1_BASEADDR					0x20000000U //SRAM1 is the main SRAM and SRAM2 is not used in this course
+#define SRAM 							SRAM1_BASEADDR
+
+/*
+ * Base address of SRAM2 and ROM memories
+ */
+#define SRAM2_BASEADDR					0x2001C000U // SRAM2 is secondary SRAM
+#define ROM								0x1FFF0000U // ROM is nothing but system memory
+
+/*
+ * Base address of AHBx and APBx Bus Peripheral base addresses
+ */
+
+#define PERIPH_BASE						0x40000000U
+#define APB1PERIPH_BASE					PERIPH_BASE //Becase APB1 bus is the first address in all the bus peripherals, thus it is same as PERIPH_BASE
+#define APB2PERIPH_BASE					0x40010000U
+#define AHB1PERIPH_BASE 				0x40020000U
+#define AHB2PERIPH_BASE					0x50000000U
+
+/*
+ * Base address of peripherals which are hanging on AHB1 bus
+ * Note: Here we are using relative addressing (w.r.t AHB1 base address) instead of direct
+ */
+
+#define GPIOA_BASEADDR					(AHB1PERIPH_BASE + 0x0000U)
+#define GPIOB_BASEADDR					(AHB1PERIPH_BASE + 0x0400U)
+#define GPIOC_BASEADDR					(AHB1PERIPH_BASE + 0x0800U)
+#define GPIOD_BASEADDR					(AHB1PERIPH_BASE + 0x0C00U)
+#define GPIOE_BASEADDR					(AHB1PERIPH_BASE + 0x1000U)
+#define GPIOF_BASEADDR					(AHB1PERIPH_BASE + 0x1400U)
+#define GPIOG_BASEADDR					(AHB1PERIPH_BASE + 0x1800U)
+#define GPIOH_BASEADDR					(AHB1PERIPH_BASE + 0x1C00U)
+
+/*
+ * Base address of peripherals which are hanging on APB1 bus
+ * Note: Here we are using relative addressing (w.r.t APB1 base address) instead of direct
+ */
+#define I2C1_BASEADDR					(APB1PERIPH_BASE + 0x5400U)
+#define I2C2_BASEADDR					(APB1PERIPH_BASE + 0x5800U)
+#define I2C3_BASEADDR					(APB1PERIPH_BASE + 0x5C00U)
+#define SPI2_BASEADDR					(APB1PERIPH_BASE + 0x3800U)
+#define SPI3_BASEADDR					(APB1PERIPH_BASE + 0x3C00U)
+#define USART2_BASEADDR					(APB1PERIPH_BASE + 0x4400U)
+#define USART3_BASEADDR					(APB1PERIPH_BASE + 0x4800U)
+#define UART4_BASEADDR					(APB1PERIPH_BASE + 0x4C00U)
+#define UART5_BASEADDR					(APB1PERIPH_BASE + 0x5000U)
+
+#endif /* INC_STM32F446XX_H_ */
