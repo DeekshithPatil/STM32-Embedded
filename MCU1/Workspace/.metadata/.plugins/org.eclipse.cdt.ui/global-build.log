@@ -1,28 +1,4 @@
-18:56:10 **** Incremental Build of configuration Debug for project stm32f446xx_drivers_test ****
-make -j4 all 
-arm-none-eabi-gcc "../drivers/Src/stm32f446xx_gpio_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"G:/Courses/STM32-Embedded/MCU1/Workspace/stm32f446xx_drivers_test/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/stm32f446xx_gpio_driver.d" -MT"drivers/Src/stm32f446xx_gpio_driver.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "drivers/Src/stm32f446xx_gpio_driver.o"
-arm-none-eabi-gcc -o "stm32f446xx_drivers_test.elf" @"objects.list"   -mcpu=cortex-m4 -T"G:\Courses\STM32-Embedded\MCU1\Workspace\stm32f446xx_drivers_test\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32f446xx_drivers_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: stm32f446xx_drivers_test.elf
- 
-arm-none-eabi-objdump -h -S  stm32f446xx_drivers_test.elf  > "stm32f446xx_drivers_test.list"
-arm-none-eabi-objcopy  -O binary  stm32f446xx_drivers_test.elf  "stm32f446xx_drivers_test.bin"
-arm-none-eabi-size   stm32f446xx_drivers_test.elf 
-   text	   data	    bss	    dec	    hex	filename
-   2180	      8	   1592	   3780	    ec4	stm32f446xx_drivers_test.elf
-Finished building: default.size.stdout
- 
-Finished building: stm32f446xx_drivers_test.bin
-Finished building: stm32f446xx_drivers_test.list
- 
- 
-18:56:15 **** Incremental Build of configuration Debug for project stm32f446xx_drivers_test ****
-make -j4 all 
-arm-none-eabi-size   stm32f446xx_drivers_test.elf 
-   text	   data	    bss	    dec	    hex	filename
-   2180	      8	   1592	   3780	    ec4	stm32f446xx_drivers_test.elf
-Finished building: default.size.stdout
- 
-18:57:43 **** Build of configuration Debug for project stm32f446xx_drivers ****
+10:01:51 **** Incremental Build of configuration Debug for project stm32f446xx_drivers ****
 make -j4 all 
 arm-none-eabi-gcc "../drivers/Src/stm32f446xx_gpio_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"G:/Courses/MCU1/Workspace/stm32f446xx_drivers/Inc" -I"G:/Courses/MCU1/Workspace/stm32f446xx_drivers/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/stm32f446xx_gpio_driver.d" -MT"drivers/Src/stm32f446xx_gpio_driver.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "drivers/Src/stm32f446xx_gpio_driver.o"
 arm-none-eabi-gcc -o "stm32f446xx_drivers.elf" @"objects.list"   -mcpu=cortex-m4 -T"G:\Courses\MCU1\Workspace\stm32f446xx_drivers\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32f446xx_drivers.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
@@ -32,180 +8,31 @@ arm-none-eabi-objdump -h -S  stm32f446xx_drivers.elf  > "stm32f446xx_drivers.lis
 arm-none-eabi-objcopy  -O binary  stm32f446xx_drivers.elf  "stm32f446xx_drivers.bin"
 arm-none-eabi-size   stm32f446xx_drivers.elf 
    text	   data	    bss	    dec	    hex	filename
-   2592	      8	   1592	   4192	   1060	stm32f446xx_drivers.elf
+   2568	      8	   1592	   4168	   1048	stm32f446xx_drivers.elf
 Finished building: default.size.stdout
- 
-Finished building: stm32f446xx_drivers.bin
  
 Finished building: stm32f446xx_drivers.list
- 
-18:59:04 **** Incremental Build of configuration Debug for project stm32f446xx_drivers ****
-make -j4 all 
-arm-none-eabi-gcc "../drivers/Src/stm32f446xx_gpio_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"G:/Courses/MCU1/Workspace/stm32f446xx_drivers/Inc" -I"G:/Courses/MCU1/Workspace/stm32f446xx_drivers/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/stm32f446xx_gpio_driver.d" -MT"drivers/Src/stm32f446xx_gpio_driver.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "drivers/Src/stm32f446xx_gpio_driver.o"
-arm-none-eabi-gcc -o "stm32f446xx_drivers.elf" @"objects.list"   -mcpu=cortex-m4 -T"G:\Courses\MCU1\Workspace\stm32f446xx_drivers\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32f446xx_drivers.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: stm32f446xx_drivers.elf
- 
-arm-none-eabi-objdump -h -S  stm32f446xx_drivers.elf  > "stm32f446xx_drivers.list"
-arm-none-eabi-objcopy  -O binary  stm32f446xx_drivers.elf  "stm32f446xx_drivers.bin"
-arm-none-eabi-size   stm32f446xx_drivers.elf 
-   text	   data	    bss	    dec	    hex	filename
-   2592	      8	   1592	   4192	   1060	stm32f446xx_drivers.elf
-Finished building: default.size.stdout
- 
 Finished building: stm32f446xx_drivers.bin
-Finished building: stm32f446xx_drivers.list
  
  
-18:59:59 **** Incremental Build of configuration Debug for project stm32f446xx_drivers ****
+10:01:55 **** Incremental Build of configuration Debug for project stm32f446xx_drivers ****
 make -j4 all 
 arm-none-eabi-size   stm32f446xx_drivers.elf 
    text	   data	    bss	    dec	    hex	filename
-   2592	      8	   1592	   4192	   1060	stm32f446xx_drivers.elf
+   2568	      8	   1592	   4168	   1048	stm32f446xx_drivers.elf
 Finished building: default.size.stdout
  
-19:02:36 **** Incremental Build of configuration Debug for project stm32f446xx_drivers ****
+10:02:45 **** Incremental Build of configuration Debug for project stm32f446xx_drivers ****
 make -j4 all 
 arm-none-eabi-size   stm32f446xx_drivers.elf 
    text	   data	    bss	    dec	    hex	filename
-   2592	      8	   1592	   4192	   1060	stm32f446xx_drivers.elf
+   2568	      8	   1592	   4168	   1048	stm32f446xx_drivers.elf
 Finished building: default.size.stdout
  
-19:05:54 **** Incremental Build of configuration Debug for project stm32f446xx_drivers ****
+10:03:03 **** Incremental Build of configuration Debug for project stm32f446xx_drivers ****
 make -j4 all 
-arm-none-eabi-gcc "../drivers/Src/stm32f446xx_gpio_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"G:/Courses/MCU1/Workspace/stm32f446xx_drivers/Inc" -I"G:/Courses/MCU1/Workspace/stm32f446xx_drivers/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/stm32f446xx_gpio_driver.d" -MT"drivers/Src/stm32f446xx_gpio_driver.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "drivers/Src/stm32f446xx_gpio_driver.o"
-arm-none-eabi-gcc "../Src/005button_interrupt.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"G:/Courses/MCU1/Workspace/stm32f446xx_drivers/Inc" -I"G:/Courses/MCU1/Workspace/stm32f446xx_drivers/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/005button_interrupt.d" -MT"Src/005button_interrupt.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/005button_interrupt.o"
-arm-none-eabi-gcc -o "stm32f446xx_drivers.elf" @"objects.list"   -mcpu=cortex-m4 -T"G:\Courses\MCU1\Workspace\stm32f446xx_drivers\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32f446xx_drivers.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: stm32f446xx_drivers.elf
- 
-arm-none-eabi-objdump -h -S  stm32f446xx_drivers.elf  > "stm32f446xx_drivers.list"
-arm-none-eabi-objcopy  -O binary  stm32f446xx_drivers.elf  "stm32f446xx_drivers.bin"
 arm-none-eabi-size   stm32f446xx_drivers.elf 
    text	   data	    bss	    dec	    hex	filename
-   2592	      8	   1592	   4192	   1060	stm32f446xx_drivers.elf
+   2568	      8	   1592	   4168	   1048	stm32f446xx_drivers.elf
 Finished building: default.size.stdout
- 
-Finished building: stm32f446xx_drivers.bin
-Finished building: stm32f446xx_drivers.list
- 
- 
-19:18:27 **** Clean-only build of configuration Debug for project stm32f446xx_drivers_test ****
-make -j4 clean 
-rm -rf *
- 
-19:18:27 **** Incremental Build of configuration Debug for project stm32f446xx_drivers_test ****
-make -j4 all 
-arm-none-eabi-gcc "../drivers/Src/stm32f446xx_gpio_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"G:/Courses/STM32-Embedded/MCU1/Workspace/stm32f446xx_drivers_test/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"drivers/Src/stm32f446xx_gpio_driver.d" -MT"drivers/Src/stm32f446xx_gpio_driver.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "drivers/Src/stm32f446xx_gpio_driver.o"
-arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -c -x assembler-with-cpp --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Startup/startup_stm32f446retx.o" "../Startup/startup_stm32f446retx.s"
-arm-none-eabi-gcc "../Src/005Interrupt_Button.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"G:/Courses/STM32-Embedded/MCU1/Workspace/stm32f446xx_drivers_test/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/005Interrupt_Button.d" -MT"Src/005Interrupt_Button.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/005Interrupt_Button.o"
-arm-none-eabi-gcc "../Src/syscalls.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"G:/Courses/STM32-Embedded/MCU1/Workspace/stm32f446xx_drivers_test/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/syscalls.d" -MT"Src/syscalls.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/syscalls.o"
-arm-none-eabi-gcc "../Src/sysmem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"G:/Courses/STM32-Embedded/MCU1/Workspace/stm32f446xx_drivers_test/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/sysmem.d" -MT"Src/sysmem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/sysmem.o"
-arm-none-eabi-gcc -o "stm32f446xx_drivers_test.elf" @"objects.list"   -mcpu=cortex-m4 -T"G:\Courses\STM32-Embedded\MCU1\Workspace\stm32f446xx_drivers_test\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32f446xx_drivers_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: stm32f446xx_drivers_test.elf
- 
-arm-none-eabi-size   stm32f446xx_drivers_test.elf 
-arm-none-eabi-objdump -h -S  stm32f446xx_drivers_test.elf  > "stm32f446xx_drivers_test.list"
-arm-none-eabi-objcopy  -O binary  stm32f446xx_drivers_test.elf  "stm32f446xx_drivers_test.bin"
-   text	   data	    bss	    dec	    hex	filename
-   2180	      8	   1592	   3780	    ec4	stm32f446xx_drivers_test.elf
-Finished building: default.size.stdout
- 
-Finished building: stm32f446xx_drivers_test.list
-Finished building: stm32f446xx_drivers_test.bin
- 
- 
-19:32:23 **** Incremental Build of configuration Debug for project stm32f446xx_drivers_test ****
-make -j4 all 
-arm-none-eabi-gcc "../Src/005Interrupt_Button.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"G:/Courses/STM32-Embedded/MCU1/Workspace/stm32f446xx_drivers_test/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/005Interrupt_Button.d" -MT"Src/005Interrupt_Button.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/005Interrupt_Button.o"
-../Src/005Interrupt_Button.c: In function 'main':
-../Src/005Interrupt_Button.c:27:31: error: 'GPIO_MODE_IT_FRET' undeclared (first use in this function); did you mean 'GPIO_MODE_IT_FET'?
-  Button.GPIO_PinConfig.Mode = GPIO_MODE_IT_FRET;
-                               ^~~~~~~~~~~~~~~~~
-                               GPIO_MODE_IT_FET
-../Src/005Interrupt_Button.c:27:31: note: each undeclared identifier is reported only once for each function it appears in
-make: *** [Src/subdir.mk:24: Src/005Interrupt_Button.o] Error 1
-"make -j4 all" terminated with exit code 2. Build might be incomplete.
-19:32:37 **** Incremental Build of configuration Debug for project stm32f446xx_drivers_test ****
-make -j4 all 
-arm-none-eabi-gcc "../Src/005Interrupt_Button.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"G:/Courses/STM32-Embedded/MCU1/Workspace/stm32f446xx_drivers_test/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/005Interrupt_Button.d" -MT"Src/005Interrupt_Button.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/005Interrupt_Button.o"
-arm-none-eabi-gcc -o "stm32f446xx_drivers_test.elf" @"objects.list"   -mcpu=cortex-m4 -T"G:\Courses\STM32-Embedded\MCU1\Workspace\stm32f446xx_drivers_test\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32f446xx_drivers_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: stm32f446xx_drivers_test.elf
- 
-arm-none-eabi-objdump -h -S  stm32f446xx_drivers_test.elf  > "stm32f446xx_drivers_test.list"
-arm-none-eabi-objcopy  -O binary  stm32f446xx_drivers_test.elf  "stm32f446xx_drivers_test.bin"
-arm-none-eabi-size   stm32f446xx_drivers_test.elf 
-   text	   data	    bss	    dec	    hex	filename
-   2180	      8	   1592	   3780	    ec4	stm32f446xx_drivers_test.elf
-Finished building: default.size.stdout
- 
-Finished building: stm32f446xx_drivers_test.list
-Finished building: stm32f446xx_drivers_test.bin
- 
- 
-19:33:15 **** Incremental Build of configuration Debug for project stm32f446xx_drivers_test ****
-make -j4 all 
-arm-none-eabi-gcc "../Src/005Interrupt_Button.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"G:/Courses/STM32-Embedded/MCU1/Workspace/stm32f446xx_drivers_test/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/005Interrupt_Button.d" -MT"Src/005Interrupt_Button.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/005Interrupt_Button.o"
-arm-none-eabi-gcc -o "stm32f446xx_drivers_test.elf" @"objects.list"   -mcpu=cortex-m4 -T"G:\Courses\STM32-Embedded\MCU1\Workspace\stm32f446xx_drivers_test\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32f446xx_drivers_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: stm32f446xx_drivers_test.elf
- 
-arm-none-eabi-objdump -h -S  stm32f446xx_drivers_test.elf  > "stm32f446xx_drivers_test.list"
-arm-none-eabi-objcopy  -O binary  stm32f446xx_drivers_test.elf  "stm32f446xx_drivers_test.bin"
-arm-none-eabi-size   stm32f446xx_drivers_test.elf 
-   text	   data	    bss	    dec	    hex	filename
-   2180	      8	   1592	   3780	    ec4	stm32f446xx_drivers_test.elf
-Finished building: default.size.stdout
- 
-Finished building: stm32f446xx_drivers_test.bin
-Finished building: stm32f446xx_drivers_test.list
- 
- 
-19:33:46 **** Incremental Build of configuration Debug for project stm32f446xx_drivers_test ****
-make -j4 all 
-arm-none-eabi-gcc "../Src/005Interrupt_Button.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"G:/Courses/STM32-Embedded/MCU1/Workspace/stm32f446xx_drivers_test/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/005Interrupt_Button.d" -MT"Src/005Interrupt_Button.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/005Interrupt_Button.o"
-arm-none-eabi-gcc -o "stm32f446xx_drivers_test.elf" @"objects.list"   -mcpu=cortex-m4 -T"G:\Courses\STM32-Embedded\MCU1\Workspace\stm32f446xx_drivers_test\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32f446xx_drivers_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: stm32f446xx_drivers_test.elf
- 
-arm-none-eabi-objdump -h -S  stm32f446xx_drivers_test.elf  > "stm32f446xx_drivers_test.list"
-arm-none-eabi-objcopy  -O binary  stm32f446xx_drivers_test.elf  "stm32f446xx_drivers_test.bin"
-arm-none-eabi-size   stm32f446xx_drivers_test.elf 
-   text	   data	    bss	    dec	    hex	filename
-   2180	      8	   1592	   3780	    ec4	stm32f446xx_drivers_test.elf
-Finished building: default.size.stdout
- 
-Finished building: stm32f446xx_drivers_test.list
-Finished building: stm32f446xx_drivers_test.bin
- 
- 
-19:35:20 **** Incremental Build of configuration Debug for project stm32f446xx_drivers_test ****
-make -j4 all 
-arm-none-eabi-gcc "../Src/005Interrupt_Button.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"G:/Courses/STM32-Embedded/MCU1/Workspace/stm32f446xx_drivers_test/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/005Interrupt_Button.d" -MT"Src/005Interrupt_Button.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/005Interrupt_Button.o"
-arm-none-eabi-gcc -o "stm32f446xx_drivers_test.elf" @"objects.list"   -mcpu=cortex-m4 -T"G:\Courses\STM32-Embedded\MCU1\Workspace\stm32f446xx_drivers_test\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32f446xx_drivers_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: stm32f446xx_drivers_test.elf
- 
-arm-none-eabi-objdump -h -S  stm32f446xx_drivers_test.elf  > "stm32f446xx_drivers_test.list"
-arm-none-eabi-objcopy  -O binary  stm32f446xx_drivers_test.elf  "stm32f446xx_drivers_test.bin"
-arm-none-eabi-size   stm32f446xx_drivers_test.elf 
-   text	   data	    bss	    dec	    hex	filename
-   2180	      8	   1592	   3780	    ec4	stm32f446xx_drivers_test.elf
-Finished building: default.size.stdout
- 
-Finished building: stm32f446xx_drivers_test.bin
-Finished building: stm32f446xx_drivers_test.list
- 
- 
-19:35:47 **** Incremental Build of configuration Debug for project stm32f446xx_drivers_test ****
-make -j4 all 
-arm-none-eabi-gcc "../Src/005Interrupt_Button.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DDEBUG -DNUCLEO_F446RE -c -I../Inc -I"G:/Courses/STM32-Embedded/MCU1/Workspace/stm32f446xx_drivers_test/drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/005Interrupt_Button.d" -MT"Src/005Interrupt_Button.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/005Interrupt_Button.o"
-arm-none-eabi-gcc -o "stm32f446xx_drivers_test.elf" @"objects.list"   -mcpu=cortex-m4 -T"G:\Courses\STM32-Embedded\MCU1\Workspace\stm32f446xx_drivers_test\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32f446xx_drivers_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: stm32f446xx_drivers_test.elf
- 
-arm-none-eabi-objdump -h -S  stm32f446xx_drivers_test.elf  > "stm32f446xx_drivers_test.list"
-arm-none-eabi-objcopy  -O binary  stm32f446xx_drivers_test.elf  "stm32f446xx_drivers_test.bin"
-arm-none-eabi-size   stm32f446xx_drivers_test.elf 
-   text	   data	    bss	    dec	    hex	filename
-   2180	      8	   1592	   3780	    ec4	stm32f446xx_drivers_test.elf
-Finished building: default.size.stdout
- 
-Finished building: stm32f446xx_drivers_test.bin
-Finished building: stm32f446xx_drivers_test.list
- 
  

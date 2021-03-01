@@ -290,10 +290,7 @@ void GPIO_IRQPriority(uint8_t IRQNumber, uint32_t Priority)
 	uint8_t temp1 = IRQNumber / 4;
 	uint8_t temp2 = IRQNumber % 4;
 
-	NVIC_IPR->IPR[temp1] |= (Priority << ((8*temp2)+4));
-	//NVICPR has 8 bits for setting priority of the associated IRQ. Out of this only the higher 4 bits actually set the value.
-	//The lower 4 bits do not have any significance.
-	//E.g: Lets say IRQ number is 0, then into IPR0, the priority value needs to be written into 7:4 and 3:0.
+	NVIC_IPR->IPR[temp1] |= (Priority << (8 * temp2));
 }
 
 void GPIO_IRQHandle(uint8_t PinNumber)

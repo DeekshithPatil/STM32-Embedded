@@ -94,7 +94,7 @@ uint8_t GPIO_ReadFromInputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber);
 uint16_t GPIO_ReadFromInputPort(GPIO_RegDef_t *pGPIOx);
 
 void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t EnorDi);
-void GPIO_IRQPriority(uint8_t IRQNumber, uint32_t Priority);
+void GPIO_IRQPriority(uint8_t IRQNumber, uint8_t Priority);
 void GPIO_IRQHandle(uint8_t PinNumber);
 
 uint8_t GPIOtoPortCode(GPIO_RegDef_t *pGPIOx);
