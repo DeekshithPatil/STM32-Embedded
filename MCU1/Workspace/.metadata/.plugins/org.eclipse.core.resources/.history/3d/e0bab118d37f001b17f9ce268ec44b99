@@ -1,0 +1,23 @@
+/*
+ * 006spi_tx_testing.c
+ *
+ *  Created on: 06-Mar-2021
+ *      Author: DELL
+ */
+
+/*
+ * SPI2:
+ * NSS ->  P^B12
+ * SCLK -> P^B13
+ * MISO -> P^B14
+ * MOSI -> P^B15
+ * Alternate functionality mode: 5
+ */
+int main(void)
+{
+	GPIO_Handle_t SPIPins;
+
+	SPIPins.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
+
+	return 0;
+}
