@@ -282,7 +282,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0xef drivers/Src/stm32f446xx_gpio_driver.o
  .debug_macro   0x0000000000000000       0x6a drivers/Src/stm32f446xx_gpio_driver.o
  .debug_macro   0x0000000000000000      0x1df drivers/Src/stm32f446xx_gpio_driver.o
- .debug_macro   0x0000000000000000      0x259 drivers/Src/stm32f446xx_gpio_driver.o
+ .debug_macro   0x0000000000000000      0x2c6 drivers/Src/stm32f446xx_gpio_driver.o
  .debug_macro   0x0000000000000000       0xc4 drivers/Src/stm32f446xx_gpio_driver.o
  .text          0x0000000000000000        0x0 h:/softwares-installed/stm_ide/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o)
  .data          0x0000000000000000        0x0 h:/softwares-installed/stm_ide/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o)
@@ -668,7 +668,7 @@ OUTPUT(stm32f446xx_drivers_test.elf elf32-littlearm)
  .debug_ranges  0x0000000000000018       0x20 Startup/startup_stm32f446retx.o
  .debug_ranges  0x0000000000000038       0x68 drivers/Src/stm32f446xx_gpio_driver.o
 
-.debug_macro    0x0000000000000000     0x12bc
+.debug_macro    0x0000000000000000     0x1329
  .debug_macro   0x0000000000000000       0x80 Src/005Interrupt_Button.o
  .debug_macro   0x0000000000000080      0xa66 Src/005Interrupt_Button.o
  .debug_macro   0x0000000000000ae6       0x22 Src/005Interrupt_Button.o
@@ -677,22 +677,22 @@ OUTPUT(stm32f446xx_drivers_test.elf elf32-littlearm)
  .debug_macro   0x0000000000000be7       0xef Src/005Interrupt_Button.o
  .debug_macro   0x0000000000000cd6       0x6a Src/005Interrupt_Button.o
  .debug_macro   0x0000000000000d40      0x1df Src/005Interrupt_Button.o
- .debug_macro   0x0000000000000f1f      0x259 Src/005Interrupt_Button.o
- .debug_macro   0x0000000000001178       0xc4 Src/005Interrupt_Button.o
- .debug_macro   0x000000000000123c       0x80 drivers/Src/stm32f446xx_gpio_driver.o
+ .debug_macro   0x0000000000000f1f      0x2c6 Src/005Interrupt_Button.o
+ .debug_macro   0x00000000000011e5       0xc4 Src/005Interrupt_Button.o
+ .debug_macro   0x00000000000012a9       0x80 drivers/Src/stm32f446xx_gpio_driver.o
 
 .debug_line     0x0000000000000000      0xe44
  .debug_line    0x0000000000000000      0x5e8 Src/005Interrupt_Button.o
  .debug_line    0x00000000000005e8       0x84 Startup/startup_stm32f446retx.o
  .debug_line    0x000000000000066c      0x7d8 drivers/Src/stm32f446xx_gpio_driver.o
 
-.debug_str      0x0000000000000000     0x4d79
- .debug_str     0x0000000000000000     0x4b77 Src/005Interrupt_Button.o
-                                       0x4ce8 (size before relaxing)
- .debug_str     0x0000000000004b77       0x31 Startup/startup_stm32f446retx.o
+.debug_str      0x0000000000000000     0x5088
+ .debug_str     0x0000000000000000     0x4e86 Src/005Interrupt_Button.o
+                                       0x4ff7 (size before relaxing)
+ .debug_str     0x0000000000004e86       0x31 Startup/startup_stm32f446retx.o
                                          0x79 (size before relaxing)
- .debug_str     0x0000000000004ba8      0x1d1 drivers/Src/stm32f446xx_gpio_driver.o
-                                       0x4e96 (size before relaxing)
+ .debug_str     0x0000000000004eb7      0x1d1 drivers/Src/stm32f446xx_gpio_driver.o
+                                       0x51a5 (size before relaxing)
 
 .comment        0x0000000000000000       0x7b
  .comment       0x0000000000000000       0x7b Src/005Interrupt_Button.o

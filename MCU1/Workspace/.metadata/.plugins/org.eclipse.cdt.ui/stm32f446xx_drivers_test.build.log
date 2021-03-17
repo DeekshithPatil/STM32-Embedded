@@ -1,4 +1,4 @@
-09:54:23 **** Incremental Build of configuration Debug for project stm32f446xx_drivers_test ****
+12:04:52 **** Incremental Build of configuration Debug for project stm32f446xx_drivers_test ****
 make -j4 all 
 arm-none-eabi-size   stm32f446xx_drivers_test.elf 
    text	   data	    bss	    dec	    hex	filename
@@ -6,5 +6,5 @@ arm-none-eabi-size   stm32f446xx_drivers_test.elf
 Finished building: default.size.stdout
  
 
-09:54:24 Build Finished. 0 errors, 0 warnings. (took 565ms)
+12:04:52 Build Finished. 0 errors, 0 warnings. (took 392ms)
 

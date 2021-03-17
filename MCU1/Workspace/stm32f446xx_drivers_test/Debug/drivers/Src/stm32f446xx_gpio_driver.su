@@ -8,5 +8,5 @@ stm32f446xx_gpio_driver.c:231:9:GPIO_ReadFromInputPin	24	static
 stm32f446xx_gpio_driver.c:240:10:GPIO_ReadFromInputPort	24	static
 stm32f446xx_gpio_driver.c:249:6:GPIO_IRQConfig	16	static
 stm32f446xx_gpio_driver.c:288:6:GPIO_IRQPriority	24	static
-stm32f446xx_gpio_driver.c:296:6:GPIO_IRQHandle	16	static
-stm32f446xx_gpio_driver.c:308:9:GPIOtoPortCode	24	static
+stm32f446xx_gpio_driver.c:299:6:GPIO_IRQHandle	16	static
+stm32f446xx_gpio_driver.c:311:9:GPIOtoPortCode	24	static

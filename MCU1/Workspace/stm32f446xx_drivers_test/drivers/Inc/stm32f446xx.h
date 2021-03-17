@@ -69,11 +69,14 @@ typedef struct
  */
 #define SYSCFG_BASE_ADDR							0x40013800
 #define EXTI_BASE_ADDR								0x40013C00
+#define SPI1_BASE_ADDR								(APB2_BASE_ADDR + 0x33FF)
 
 
 /*
  * Base addresses of peripherals under APB1 bus
  */
+#define SPI2_BASE_ADDR								(APB1_BASE_ADDR + 0x3800)
+#define SPI3_BASE_ADDR								(APB1_BASE_ADDR + 0x3C00)
 
 /***************************** START: Register definitions ************************************/
 
@@ -159,6 +162,19 @@ typedef struct
 	volatile uint32_t CFGR;
 }SYSCFG_RegDef_t;
 
+typedef struct
+{
+	volatile uint32_t CR1;
+	volatile uint32_t CR2;
+	volatile uint32_t SR;
+	volatile uint32_t DR;
+	volatile uint32_t CRCPR;
+	volatile uint32_t RXCRCR;
+	volatile uint32_t TXCRCR;
+	volatile uint32_t I2SCFGR;
+	volatile uint32_t I2SPR;
+}SPI_RegDef_t;
+
 
 /****************************************END: Register Definitions**********************/
 
@@ -176,6 +192,10 @@ typedef struct
 #define SYSCFG							((SYSCFG_RegDef_t *)SYSCFG_BASE_ADDR)
 #define EXTI							((EXTI_RegDef_t *)EXTI_BASE_ADDR)
 
+#define SPI1							((SPI_RegDef_t *)SPI1_BASE_ADDR)
+#define SPI2							((SPI_RegDef_t *)SPI2_BASE_ADDR)
+#define SPI3							((SPI_RegDef_t *)SPI3_BASE_ADDR)
+
 /*****************************************START: Peripheral clock Enable and Disable*********/
 #define GPIOA_PCLK_EN()					(RCC->AHB1_ENR |= 1<<0)
 #define GPIOB_PCLK_EN()					(RCC->AHB1_ENR |= 1<<1)
@@ -188,6 +208,10 @@ typedef struct
 
 #define SYSCFG_PCLK_EN()				(RCC->APB2_ENR |= 1<<14)
 
+#define SPI1_PCLK_EN()					(RCC->APB2_ENR |= 1<<12)
+#define SPI2_PCLK_EN()					(RCC->APB1_ENR |= 1<<14)
+#define SPI3_PCLK_EN()					(RCC->APB1_ENR |= 1<<15)
+
 #define GPIOA_PCLK_DI()					(RCC->AHB1_ENR &= ~(1<<0))
 #define GPIOB_PCLK_DI()					(RCC->AHB1_ENR &= ~(1<<1))
 #define GPIOC_PCLK_DI()					(RCC->AHB1_ENR &= ~(1<<2))
@@ -196,6 +220,13 @@ typedef struct
 #define GPIOF_PCLK_DI()					(RCC->AHB1_ENR &= ~(1<<5))
 #define GPIOG_PCLK_DI()					(RCC->AHB1_ENR &= ~(1<<6))
 #define GPIOH_PCLK_DI()					(RCC->AHB1_ENR &= ~(1<<7))
+
+#define SYSCFG_PCLK_DI()				(RCC->APB2_ENR &= ~(1<<14))
+
+#define SPI1_PCLK_DI()					(RCC->APB2_ENR &= ~(1<<12))
+#define SPI2_PCLK_DI()					(RCC->APB1_ENR &= ~(1<<14))
+#define SPI3_PCLK_DI()					(RCC->APB1_ENR &= ~(1<<15))
+
 
 #define GPIOA_REG_RST()					do{(RCC->AHB1_RSTR |= 1<<0); (RCC->AHB1_RSTR &= ~(1<<0));}while(0)
 #define GPIOB_REG_RST()					do{(RCC->AHB1_RSTR |= 1<<1); (RCC->AHB1_RSTR &= ~(1<<1));}while(0)
@@ -206,11 +237,57 @@ typedef struct
 #define GPIOG_REG_RST()					do{(RCC->AHB1_RSTR |= 1<<6); (RCC->AHB1_RSTR &= ~(1<<6));}while(0)
 #define GPIOH_REG_RST()					do{(RCC->AHB1_RSTR |= 1<<7); (RCC->AHB1_RSTR &= ~(1<<7));}while(0)
 
+#define SPI1_REG_RST()					do{(RCC->APB2_RSTR |= 1<<12); (RCC->APB2_RSTR &= ~(1<<12));}while(0)
+#define SPI2_REG_RST()					do{(RCC->APB1_RSTR |= 1<<14); (RCC->APB1_RSTR &= ~(1<<14));}while(0)
+#define SPI3_REG_RST()					do{(RCC->APB1_RSTR |= 1<<15); (RCC->APB1_RSTR &= ~(1<<15));}while(0)
+
+/*
+ * SPI Bit positions
+ */
+
+#define SPI_CR1_CPHA_BITPOS					0
+#define SPI_CR1_CPOL_BITPOS					1
+#define SPI_CR1_MSTR_BITPOS					2
+#define SPI_CR1_BR_BITPOS					3
+#define SPI_CR1_SPE_BITPOS					6
+#define SPI_CR1_LSBFIRST_BITPOS				7
+#define SPI_CR1_SSI_BITPOS					8
+#define SPI_CR1_SSM_BITPOS					9
+#define SPI_CR1_RXONLY_BITPOS				10
+#define SPI_CR1_DFF_BITPOS					11
+#define SPI_CR1_CRCNEXT_BITPOS				12
+#define SPI_CR1_CRCEN_BITPOS				13
+#define SPI_CR1_BIDIOE_BITPOS				14
+#define SPI_CR1_BIDIMODE_BITPOS				15
+
+#define SPI_CR2_RXDMAEN_BITPOS				0
+#define SPI_CR2_TXDMAEN_BITPOS				1
+#define SPI_CR2_SSOE_BITPOS					2
+#define SPI_CR2_FRF_BITPOS					4
+#define SPI_CR2_ERRIE_BITPOS				5
+#define SPI_CR2_RXNEIE_BITPOS				6
+#define SPI_CR2_TXEIE_BITPOS				7
+
+#define SPI_SR_RXNE_BITPOS					0
+#define SPI_SR_TXE_BITPOS					1
+#define SPI_SR_CHSIDE_BITPOS				2
+#define SPI_SR_UDR_BITPOS					3
+#define SPI_SR_CRCERR_BITPOS				4
+#define SPI_SR_MODF_BITPOS					5
+#define SPI_SR_BSY_BITPOS					6
+#define SPI_SR_FRE_BITPOS					7
+
+#define TXE_FLAG							(1 << SPI_SR_TXE_BITPOS)
+#define MODF_FLAG							(1 << SPI_SR_MODF_BITPOS)
+#define BSY_FLAG							(1 << SPI_SR_BSY_BITPOS)
+
 //Some commonly used #defines
 #define DISABLE								0
 #define ENABLE								1
 #define RESET								DISABLE
 #define SET									ENABLE
+#define FLAG_SET							SET
+#define FLAG_RESET							RESET
 
 #define EXTI0_IRQ_NO						6
 #define	EXTI1_IRQ_NO						7
@@ -240,5 +317,6 @@ typedef struct
 
 
 #include "stm32f446xx_gpio_driver.h"
+#include "stm32f446xx_spi_driver.h"
 
 #endif /* INC_STM32F446XX_TEST_H_ */
