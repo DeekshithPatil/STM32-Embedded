@@ -6,11 +6,16 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="EXTI"/>
+		<item key="selection" value="I2C"/>
 		<list key="findhistory">
+			<item value="SPI"/>
+			<item value="pSPIx"/>
+			<item value="ReadByte"/>
 			<item value="EXTI"/>
 		</list>
 		<list key="replacehistory">
+			<item value="I2C"/>
+			<item value="pI2Cx"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

@@ -1,0 +1,189 @@
+/*
+ * 009spi_message_interrupt.c
+ *
+ *  Created on: 20-Mar-2021
+ *      Author: DELL
+ */
+#include<stdio.h>
+#include<string.h>
+#include"stm32f446xx.h"
+
+SPI_Handle_t SPI2Handle;
+#define MAXLEN		500
+
+char RcvBuff[MAXLEN];
+volatile char ReadByte;
+
+volatile uint8_t rcvStop = 0;
+
+/* This flag will be set in the interrupt handler of the arduino interrupt GPIO */
+volatile uint8_t dataAvailable = 0;
+
+/*
+ * SPI2:
+ * NSS ->  P^B12
+ * SCLK -> P^B13
+ * MISO -> P^B14
+ * MOSI -> P^B15
+ * Alternate functionality mode: 5
+ */
+
+void Slave_GPIO_InterruptPinInit()
+{
+	GPIO_Handle_t SpiIntPin;
+
+	SpiIntPin.pGPIOx = GPIOC;
+	SpiIntPin.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_4;
+	SpiIntPin.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IT_FT;
+	SpiIntPin.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_LOW;
+	SpiIntPin.GPIO_PinConfig.GPIO_PinPupdControl = GPIO_NO_PUPD;
+
+	GPIO_Init(&SpiIntPin);
+
+	GPIO_IRQPriorityConfig(IRQ_NO_EXTI4,NVIC_IRQ_PRIO15);
+	GPIO_IRQInterruptConfig(IRQ_NO_EXTI4,ENABLE);
+}
+
+void SPI2_GPIOInits()
+{
+	GPIO_Handle_t SPIPins;
+
+	SPIPins.pGPIOx = GPIOB;
+	SPIPins.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
+	SPIPins.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
+	SPIPins.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
+	SPIPins.GPIO_PinConfig.GPIO_PinPupdControl = GPIO_NO_PUPD;
+
+	//Sclk pin
+	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_13;
+	GPIO_Init(&SPIPins);
+
+	//MOSI
+	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_15;
+	GPIO_Init(&SPIPins);
+
+	//MISO
+	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_14;
+	GPIO_Init(&SPIPins);
+
+	//NSS
+	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
+	GPIO_Init(&SPIPins);
+
+}
+
+
+void SPI2_Inits()
+{
+	SPI2Handle.pSPIx = SPI2;
+	SPI2Handle.SPIConfig.SPI_BusConfig = SPI_BUS_CONFIG_FD;
+	SPI2Handle.SPIConfig.SPI_DeviceMode = SPI_DEVICE_MODE_MASTER;
+	SPI2Handle.SPIConfig.SPI_SclSpeed = SPI_SCLK_SPEED_DIV32;
+	SPI2Handle.SPIConfig.SPI_DFF = SPI_DFF_8BITS;
+	SPI2Handle.SPIConfig.SPI_CPHA = SPI_CPHA_LOW;
+	SPI2Handle.SPIConfig.SPI_CPOL = SPI_CPOL_LOW;
+	SPI2Handle.SPIConfig.SPI_SSM = SPI_SSM_DI;
+
+	SPI_Init(&SPI2Handle);
+
+}
+
+int main(void)
+{
+	uint8_t dummy = 0xFF;
+
+	//Configure PC^4 as interrupt pin (Falling edge trigger)
+	Slave_GPIO_InterruptPinInit();
+
+	//Configure SPI2 GPIO pins into the appropriate alternate functions
+	SPI2_GPIOInits();
+
+	//This function is used to initialise SPI2 peripheral
+	SPI2_Inits();
+
+	/*
+	 * Making SSOE = 1 enables NSS output
+	 * When SSOE is 1, the NSS pin is automatically managed by the hardware
+	 * i.e when SPE=1, NSS will be pulled to low
+	 * and NSS pin will be high when SPE = 0
+	 */
+
+	SPI_SSOEConfig(SPI2,ENABLE);
+
+	//Enable Interrupts on the MPU side
+	SPI_IRQInterruptConfig(IRQ_NO_SPI2, ENABLE);
+
+	while(1)
+	{
+		rcvStop = 0;
+		while(!dataAvailable){} //Wait till data available (GPIO interrupt) is raised from the slave device (Arduino)
+
+		//1. Disable the GPIO interrupt momentarily (i.e until SPI communication is done)
+		GPIO_IRQInterruptConfig(IRQ_NO_EXTI4,DISABLE);
+
+		//2. Enable the SPI peripheral
+		SPI_PeripheralControl(SPI2, ENABLE);
+
+		/*3. Fetch the data from the SPI peripheral byte by byte in interrupt mode*/
+		while(!rcvStop)
+		{
+			while(SPI_SendDataIT(&SPI2Handle, &dummy,1) == SPI_BUSY_IN_TX);
+			while(SPI_ReceiveDataIT(&SPI2Handle, &ReadByte,1) == SPI_BUSY_IN_RX);
+		}
+
+		//Confirm SPI is not busy
+		while(SPI_GetFlagStatus(SPI2,SPI_BUSY_FLAG));
+
+		//Disable the SPI2 peripheral
+		SPI_PeripheralControl(SPI2, DISABLE);
+
+		//Print the data
+		printf("Received data = %s\n",RcvBuff);
+
+		dataAvailable=0;
+
+		//Enable the GPIO interrupt to start monitoring again
+		GPIO_IRQInterruptConfig(IRQ_NO_EXTI4,ENABLE);
+
+
+	}
+
+
+
+	return 0;
+}
+
+/* Runs when a data byte is received from the peripheral over SPI*/
+void SPI2_IRQHandler(void)
+{
+	SPI_IRQHandling(&SPI2Handle);
+}
+
+
+void SPI_ApplicationEventCallback(SPI_Handle_t *pSPIHandle, uint8_t AppEv)
+{
+	static uint32_t i=0;
+
+	/* In the Rx complete event, copy data into RcvBuff. '\0' indicates end of message(rcvStop=1)*/
+	if(AppEv == SPI_EVENT_RX_CMPLT)
+	{
+		RcvBuff[i] == ReadByte;
+		i++;
+		if((ReadByte == '\0') || (i == MAX_LEN))
+		{
+			rcvStop=1;
+			RcvBuff[i-1] = '\0';
+			i=0;
+		}
+	}
+}
+
+/* GPIO Interrupt (Slave data interrupt) handler */
+void EXTI4_IRQHandler(void)
+{
+	GPIO_IRQHandling(GPIO_PIN_NO_6);
+
+	dataAvailable = 1;
+}
+
+

@@ -122,6 +122,9 @@ void GPIO_PeriClockControl(GPIO_RegDef_t *pGPIOx, uint8_t EnorDi)
 void GPIO_Init(GPIO_Handle_t *pGPIOHandle)
 {
 	uint32_t temp=0;
+
+	//Enable the GPIO Peripheral clock
+	GPIO_PeriClockControl(pGPIOHandle->pGPIOx, ENABLE);
 	//1. configure the mode of gpio pin
 	if(pGPIOHandle->GPIO_PinConfig.GPIO_PinMode <= GPIO_MODE_ANALOG) //Which means it is working in non-interrupt mode
 	{
@@ -364,27 +367,30 @@ void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi)
 
 }
 
-void GPIO_IRQPriorityConfig(uint8_t IRQNumber, uint8_t IRQPriority)
+void GPIO_IRQPriorityConfig(uint8_t IRQNumber, uint32_t Priority)
 {
-	uint8_t iprx = IRQNumber / 4;
-	uint8_t iprx_section = IRQNumber %4;
+	uint8_t temp1 = IRQNumber / 4;
+	uint8_t temp2 = IRQNumber % 4;
 
-	uint8_t shift_amount = ( 8 * iprx_section) + (8 - NO_PR_BITS_IMPLEMENTED);
-	//NO_PR_BITS_IMPLEMENTED is defined in MCU specific header file
-
-	*(NVIC_PR_BASE_ADDR + (4 *iprx)) |= IRQPriority << ( 8 * shift_amount);
-	// On the LHS we are multiplying by 4 because we need to jump by 32 bits.
-	// As each address holds 1Byte or 8 bits, we need to jump by 32/8 = 4 bits to access the next register
-	// Multiplying 4 with iprx gives the actual address into which we need to program the value into
+	NVIC_IPR->IPR[temp1] |= (Priority << ((8*temp2)+4));
+	//NVIC_PR has 8 bits for setting priority of the associated IRQ. Out of this only the higher 4 bits actually set the value.
+	//The lower 4 bits do not have any significance.
+	//E.g: Lets say IRQ number is 0, then into IPR0, the priority value needs to be written into 7:4 and 3:0.
 }
 
 void GPIO_IRQHandling(uint8_t PinNumber)
 {
+	//Clear the pending register
+			//EXTI->PR |= (1 << PinNumber); // the procedure to clear the PR register is to write 1
 	//clear the exti pr register corresponding to the pin number
-	if(EXTI->PR & (1 << PinNumber))
+	if((EXTI->PR & (1 << PinNumber)))
 	{
 		//Clear the pending register
 		EXTI->PR |= (1 << PinNumber); // the procedure to clear the PR register is to write 1
 	}
+	/*if(((EXTI->PR >> PinNumber) & 0x1))
+	{
+		EXTI->PR |= 1 << PinNumber;
+	}*/
 }
 

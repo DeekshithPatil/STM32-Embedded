@@ -1,0 +1,110 @@
+/*
+ * 015uart_tx.c
+ *
+ *  Created on: 10-Apr-2021
+ *      Author: DELL
+ */
+
+
+#include "stm32f446xx.h"
+#include <string.h>
+#include <stdio.h>
+
+/*
+ * USART 2 is used
+ * Rx of Stm32 -> PA^3 (ALternate functionality number = 7)
+ * Tx of Stm32 -> PA^2 (ALternate functionality number = 7)
+ */
+
+char msg[1024] = "UART Tx testing...\n\r";
+
+USART_Handle_t USART2_Handle;
+
+void delay(void)
+{
+	uint32_t i;
+
+	for(i=0;i<1000000/2;i++)
+	{
+
+	}
+}
+
+void GPIO_ButtonInit()
+{
+	GPIO_Handle_t GPIOBtn;
+	memset(&GPIOBtn,0,sizeof(GPIOBtn));
+
+	GPIOBtn.pGPIOx = GPIOC;
+	GPIOBtn.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_13;
+	GPIOBtn.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IN;
+	GPIOBtn.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
+	//GPIOLed.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP; //Output type does not matter when pin is configured as input
+	GPIOBtn.GPIO_PinConfig.GPIO_PinPupdControl = GPIO_NO_PUPD; //There already exists an external pull down
+
+
+	GPIO_PeriClockControl(GPIOC, ENABLE);
+
+	GPIO_Init(&GPIOBtn);
+}
+
+void USART2_GPIOInit(void)
+{
+	GPIO_Handle_t usart_gpios;
+	memset(&usart_gpios,0,sizeof(usart_gpios));
+
+	usart_gpios.pGPIOx = GPIOA;
+	usart_gpios.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
+	usart_gpios.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
+	usart_gpios.GPIO_PinConfig.GPIO_PinPupdControl = GPIO_NO_PUPD;
+	usart_gpios.GPIO_PinConfig.GPIO_PinPupdControl = GPIO_SPEED_FAST;
+	usart_gpios.GPIO_PinConfig.GPIO_PinAltFunMode = 7;
+
+	//USART2 TX
+	usart_gpios.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_2;
+	GPIO_Init(&usart_gpios);
+
+	//USART2 RX
+	usart_gpios.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_3;
+	GPIO_Init(&usart_gpios);
+}
+
+void USART2_Init(void)
+{
+	memset(&USART2_Handle,0,sizeof(USART2_Handle));
+
+	USART2_Handle.pUSARTx = USART2;
+	USART2_Handle.USART_Config.USART_Baud = USART_STD_BAUD_9600;
+	USART2_Handle.USART_Config.USART_HWFlowControl = USART_HW_FLOW_CTRL_NONE;
+	USART2_Handle.USART_Config.USART_Mode = USART_MODE_ONLY_TX;
+	USART2_Handle.USART_Config.USART_NoOfStopBits = USART_STOPBITS_1;
+	USART2_Handle.USART_Config.USART_WordLength = USART_WORDLEN_8BITS;
+	USART2_Handle.USART_Config.USART_ParityControl = USART_PARITY_DISABLE;
+
+	USART_Init(&USART2_Handle);
+}
+
+int main()
+{
+	USART2_GPIOInit(); //Configure the required pins into appropriate alternate functionality
+
+	USART_PeripheralControl(USART2,ENABLE);
+
+	USART2_Init(); //Configure USART2 as per requirement
+
+	GPIO_ButtonInit();
+
+
+
+	while(1)
+	{
+		//Wait till button is pressed
+		while(GPIO_ReadFromInputPin(GPIOC, GPIO_PIN_NO_13)){} //Wait until button is pressed
+		delay(); //To avoid debounce effect
+
+		USART_SendData(&USART2_Handle,(uint8_t *)msg,strlen(msg));
+
+	}
+
+	return 0;
+}

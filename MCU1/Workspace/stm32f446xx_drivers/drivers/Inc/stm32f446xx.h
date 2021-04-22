@@ -6,6 +6,7 @@
  */
 
 #include<stdint.h>
+#include<stddef.h>
 
 #ifndef INC_STM32F446XX_H_
 #define INC_STM32F446XX_H_
@@ -35,7 +36,14 @@
 /*
  *ARM Cortex Mx Processor Priority Register Address Calculation
  */
-#define NVIC_PR_BASE_ADDR				((volatile uint32_t *)0xE000E400)
+#define NVIC_IPR_BASE_ADDR							0xE000E400
+
+typedef struct
+{
+	volatile uint32_t IPR[60];
+}NVIC_IPR_RegDef_t;
+
+#define NVIC_IPR									((NVIC_IPR_RegDef_t *)NVIC_IPR_BASE_ADDR)
 
 /*
  * Number of priority bits implemented in priority register
@@ -193,6 +201,43 @@ typedef struct
 
 }SYSCFG_RegDef_t;
 
+typedef struct
+{
+	volatile uint32_t CR1;
+	volatile uint32_t CR2;
+	volatile uint32_t SR;
+	volatile uint32_t DR;
+	volatile uint32_t CRCPR;
+	volatile uint32_t RXCRCR;
+	volatile uint32_t TXCRCR;
+	volatile uint32_t I2SCFGR;
+	volatile uint32_t I2SPR;
+}SPI_RegDef_t;
+
+typedef struct
+{
+	volatile uint32_t CR1;
+	volatile uint32_t CR2;
+	volatile uint32_t OAR1;
+	volatile uint32_t OAR2;
+	volatile uint32_t DR;
+	volatile uint32_t SR1;
+	volatile uint32_t SR2;
+	volatile uint32_t CCR;
+	volatile uint32_t TRISE;
+	volatile uint32_t FLTR;
+}I2C_RegDef_t;
+
+typedef struct
+{
+	volatile uint32_t SR;
+	volatile uint32_t DR;
+	volatile uint32_t BRR;
+	volatile uint32_t CR1;
+	volatile uint32_t CR2;
+	volatile uint32_t CR3;
+	volatile uint32_t GTPR;
+}USART_RegDef_t;
 /*
  * peripheral definitions (Peripheral base addresses type casted to xxx_RegDef_t)
  * Note: Type casting is used to tell the compiler specifically that the value is an address and not an integer data
@@ -209,6 +254,22 @@ typedef struct
 #define RCC								((RCC_RegDef_t *) RCC_BASEADDR)
 #define EXTI							((EXTI_RegDef_t *) EXTI_BASEADDR)
 #define SYSCFG							((SYSCFG_RegDef_t *) SYSCFG_BASEADDR)
+
+#define SPI1							((SPI_RegDef_t *) SPI1_BASEADDR)
+#define SPI2							((SPI_RegDef_t *) SPI2_BASEADDR)
+#define SPI3							((SPI_RegDef_t *) SPI3_BASEADDR)
+
+#define I2C1							((I2C_RegDef_t *) I2C1_BASEADDR)
+#define I2C2							((I2C_RegDef_t *) I2C2_BASEADDR)
+#define I2C3							((I2C_RegDef_t *) I2C3_BASEADDR)
+
+#define USART1							((USART_RegDef_t *) USART1_BASEADDR)
+#define USART2							((USART_RegDef_t *) USART2_BASEADDR)
+#define USART3							((USART_RegDef_t *) USART3_BASEADDR)
+#define UART4							((USART_RegDef_t *) UART4_BASEADDR)
+#define UART5							((USART_RegDef_t *) UART5_BASEADDR)
+#define USART6							((USART_RegDef_t *) USART6_BASEADDR)
+
 
 /*
  * Clock Enable Macros for GPIOx peripherals
@@ -244,6 +305,13 @@ typedef struct
 #define USART1_PCLK_EN()				(RCC->APB2ENR |= (1<<4))
 #define USART2_PCLK_EN()				(RCC->APB1ENR |= (1<<17))
 #define USART3_PCLK_EN()				(RCC->APB1ENR |= (1<<18))
+#define UART4_PCLK_EN()					(RCC->APB1ENR |= (1<<19))
+#define UART5_PCLK_EN()					(RCC->APB1ENR |= (1<<20))
+#define USART6_PCLK_EN()				(RCC->APB2ENR |= (1<<5))
+
+#define USART4_PCLK_EN()					(UART4_PCLK_EN())
+#define USART5_PCLK_EN()					(UART5_PCLK_EN())
+
 
 /*
  * Clock Enable Macros for SYSCFG peripheral
@@ -286,6 +354,9 @@ typedef struct
 #define USART1_PCLK_DI()				(RCC->APB2ENR &= ~(1<<4))
 #define USART2_PCLK_DI()				(RCC->APB1ENR &= ~(1<<17))
 #define USART3_PCLK_DI()				(RCC->APB1ENR &= ~(1<<18))
+#define UART4_PCLK_DI()					(RCC->APB1ENR &= ~(1<<19))
+#define UART5_PCLK_DI()					(RCC->APB1ENR &= ~(1<<20))
+#define USART6_PCLK_DI()				(RCC->APB2ENR &= ~(1<<5))
 
 /*
  * Clock disable Macros for SYSCFG peripheral
@@ -308,6 +379,24 @@ typedef struct
 #define GPIOG_REG_RESET()				do{ (RCC->AHB1RSTR |= (1<<6));	(RCC->AHB1RSTR &= ~(1<<6));}while(0)
 #define GPIOH_REG_RESET()				do{ (RCC->AHB1RSTR |= (1<<7));	(RCC->AHB1RSTR &= ~(1<<7));}while(0)
 
+#define SPI1_REG_RESET()				do{ (RCC->APB2RSTR |= (1<<12)); (RCC->APB2RSTR &= ~(1<<12));}while(0)
+#define SPI2_REG_RESET()				do{ (RCC->APB1RSTR |= (1<<14)); (RCC->APB1RSTR &= ~(1<<14));}while(0)
+#define SPI3_REG_RESET()				do{ (RCC->APB1RSTR |= (1<<15)); (RCC->APB1RSTR &= ~(1<<15));}while(0)
+
+#define I2C1_REG_RESET()				do{ (RCC->APB1RSTR |= (1<<21)); (RCC->APB1RSTR &= ~(1<<21));}while(0)
+#define I2C2_REG_RESET()				do{ (RCC->APB1RSTR |= (1<<22)); (RCC->APB1RSTR &= ~(1<<22));}while(0)
+#define I2C3_REG_RESET()				do{ (RCC->APB1RSTR |= (1<<23)); (RCC->APB1RSTR &= ~(1<<23));}while(0)
+
+#define	USART1_REG_RESET()				do{ (RCC->APB2RSTR |= (1<<4)); (RCC->APB2RSTR &= ~(1<<4));}while(0)
+#define	USART6_REG_RESET()				do{ (RCC->APB2RSTR |= (1<<5)); (RCC->APB2RSTR &= ~(1<<5));}while(0)
+#define	USART2_REG_RESET()				do{ (RCC->APB1RSTR |= (1<<17)); (RCC->APB1RSTR &= ~(1<<17));}while(0)
+#define	USART3_REG_RESET()				do{ (RCC->APB1RSTR |= (1<<18)); (RCC->APB1RSTR &= ~(1<<18));}while(0)
+#define	UART4_REG_RESET()				do{ (RCC->APB1RSTR |= (1<<19)); (RCC->APB1RSTR &= ~(1<<19));}while(0)
+#define	UART5_REG_RESET()				do{ (RCC->APB1RSTR |= (1<<20)); (RCC->APB1RSTR &= ~(1<<20));}while(0)
+
+
+
+
 /*
  * return port code for selecting relevant port in EXTCR for given GPIOx base address
  */
@@ -329,7 +418,39 @@ typedef struct
 #define IRQ_NO_EXTI9_5					23
 #define IRQ_NO_EXTI15_10				40
 
+//Defining IRQ number macros for SPI
+#define IRQ_NO_SPI1						35
+#define IRQ_NO_SPI2						36
+#define IRQ_NO_SPI3						51
+#define IRQ_NO_SPI4						84
 
+//Defining IRQ number macros for I2C
+#define IRQ_NO_I2C1_EV					31
+#define IRQ_NO_I2C1_ERR					32
+
+#define IRQ_NO_I2C2_EV					33
+#define IRQ_NO_I2C2_ERR					34
+
+#define IRQ_NO_I2C3_EV					79
+#define IRQ_NO_I2C3_ERR					80
+
+// IRQ priorities
+#define NVIC_IRQ_PRIO0					0
+#define NVIC_IRQ_PRIO1					1
+#define NVIC_IRQ_PRIO2					2
+#define NVIC_IRQ_PRIO3					3
+#define NVIC_IRQ_PRIO4					4
+#define NVIC_IRQ_PRIO5					5
+#define NVIC_IRQ_PRIO6					6
+#define NVIC_IRQ_PRIO7					7
+#define NVIC_IRQ_PRIO8					8
+#define NVIC_IRQ_PRIO9					9
+#define NVIC_IRQ_PRIO10					10
+#define NVIC_IRQ_PRIO11					11
+#define NVIC_IRQ_PRIO12					12
+#define NVIC_IRQ_PRIO13					13
+#define NVIC_IRQ_PRIO14					14
+#define NVIC_IRQ_PRIO15					15
 
 
 
@@ -340,9 +461,216 @@ typedef struct
 #define RESET 						DISABLE
 #define GPIO_PIN_SET				SET
 #define GPIO_PIN_RESET				RESET
+#define FLAG_RESET					RESET
+#define FLAG_SET					SET
+
+/********************************************************************************
+ * Bit Position Definitions of SPI Peripheral
+ ********************************************************************************/
+/*
+ * Bit position definitions of SPI_CR1
+ */
+#define SPI_CR1_CPHA					0
+#define SPI_CR1_CPOL					1
+#define SPI_CR1_MSTR					2
+#define SPI_CR1_BR						3
+#define SPI_CR1_SPE						6
+#define SPI_CR1_LSBFIRST                7
+#define SPI_CR1_SSI						8
+#define SPI_CR1_SSM						9
+#define SPI_CR1_RXONLY					10
+#define SPI_CR1_DFF						11
+#define SPI_CR1_CRCNEXT					12
+#define SPI_CR1_CRCEN					13
+#define SPI_CR1_BIDIOE					14
+#define SPI_CR1_BIDIMODE				15
+
+
+/*
+ * Bit position definitions of SPI_CR2
+ */
+#define SPI_CR2_RXDMAEN					0
+#define SPI_CR2_TXDMAEN					1
+#define SPI_CR2_SSOE					2
+#define SPI_CR2_FRF						4
+#define SPI_CR2_ERRIE					5
+#define SPI_CR2_RXNEIE					6
+#define SPI_CR2_TXEIE					7
+
+/*
+ * Bit position definitios of SPI_SR
+ */
+#define SPI_SR_RXNE						0
+#define SPI_SR_TXE						1
+#define SPI_SR_CHSIDE					2
+#define SPI_SR_UDR						3
+#define SPI_SR_CRCERR					4
+#define SPI_SR_MODF						5
+#define SPI_SR_OVR						6
+#define SPI_SR_BUSY						7
+#define SPI_SR_FRE						8
+
+/***********************************************************
+ * *************Bit Position Definitions of I2C*************
+ **********************************************************/
+
+/*
+ * Bit position definitions of I2C_CR1
+ */
+
+#define I2C_CR1_PE						0
+#define I2C_CR1_SMBUS					1
+#define I2C_CR1_SMBTYPE					3
+#define I2C_CR1_ENARP					4
+#define I2C_CR1_ENPEC					5
+#define I2C_CR1_ENGC					6
+#define I2C_CR1_NOSTRETCH				7
+#define I2C_CR1_START					8
+#define I2C_CR1_STOP					9
+#define I2C_CR1_ACK						10
+#define I2C_CR1_POS						11
+#define I2C_CR1_PEC						12
+#define I2C_CR1_ALERT					13
+#define I2C_CR1_SWRST					14
+
+/*
+ * Bit position definitions of I2C_CR2
+ */
+#define I2C_CR2_FREQ					0
+#define I2C_CR2_ITERREN					8
+#define I2C_CR2_ITEVTEN					9
+#define I2C_CR2_ITBUFEN					10
+#define I2C_CR2_DMAEN					11
+#define I2C_CR2_LAST					12
+
+/*
+ * Bit position definitions of I2C_SR1
+ */
+#define I2C_SR1_SB						0
+#define I2C_SR1_ADDR					1
+#define I2C_SR1_BTF						2
+#define I2C_SR1_ADD10					3
+#define I2C_SR1_STOPF					4
+#define I2C_SR1_RXNE					6
+#define I2C_SR1_TXE						7
+#define I2C_SR1_BERR					8
+#define I2C_SR1_ARLO					9
+#define I2C_SR1_AF						10
+#define I2C_SR1_OVR						11
+#define I2C_SR1_PECERR					12
+#define I2C_SR1_TIMEOUT					14
+#define I2C_SR1_SMBALERT				15
+
+/*
+ * Bit position definitions of I2C_SR2
+ */
+#define I2C_SR2_MSL						0
+#define I2C_SR2_BUSY					1
+#define I2C_SR2_TRA						2
+#define I2C_SR2_GENCALL					4
+#define I2C_SR2_SMBDEFAULT				5
+#define I2C_SR2_SMBHOST					6
+#define I2C_SR2_DUALF					7
+#define I2C_SR2_PEC						8
+
+/*
+ * Bit position definitions of I2C_CCR
+ */
+#define I2C_CCR_CCR						0
+#define I2C_CCR_DUTY					14
+#define I2C_CCR_F_S						15
+
+/*
+ * Bit position definitions of I2C_TRISE
+ */
+#define I2C_TRISE_TRISE					0
+
+/*
+ * Bit position definitions of I2C_FLTR
+ */
+#define I2C_FLTR_DNF					0
+#define I2C_FLTR_ANOFF					4
+
+/*
+ * Bit position definitions of USART_CR1
+ */
+#define USART_CR1_SBK						0
+#define USART_CR1_RWU						1
+#define USART_CR1_RE						2
+#define USART_CR1_TE						3
+#define USART_CR1_IDLEIE					4
+#define USART_CR1_RXNEIE					5
+#define USART_CR1_TCIE						6
+#define USART_CR1_TXEIE						7
+#define USART_CR1_PEIE						8
+#define USART_CR1_PS						9
+#define USART_CR1_PCE						10
+#define USART_CR1_WAKE						11
+#define USART_CR1_M							12
+#define USART_CR1_UE						13
+#define USART_CR1_OVR8						15
+
+/*
+ * Bit position definitions of USART_CR2
+ */
+#define USART_CR2_ADD						0
+#define USART_CR2_LBDL						5
+#define USART_CR2_LBDIE						6
+#define USART_CR2_LBCL						8
+#define USART_CR2_CPHA						9
+#define USART_CR2_CPOL						10
+#define USART_CR2_CLKEN						11
+#define USART_CR2_STOP						12
+#define USART_CR2_LINEN						14
+
+/*
+ * Bit position definitions of USART_CR3
+ */
+
+#define USART_CR3_EIE						0
+#define USART_CR3_IREN						1
+#define USART_CR3_IRLP						2
+#define USART_CR3_HDSEL						3
+#define USART_CR3_NACK						4
+#define USART_CR3_SCEN						5
+#define USART_CR3_DMAR						6
+#define USART_CR3_DMAT						7
+#define USART_CR3_RTSE						8
+#define USART_CR3_CTSE						9
+#define USART_CR3_CTSIE						10
+#define USART_CR3_ONEBIT					11
+
+/*
+ * Bit position definitions of USART_SR
+ */
+#define USART_SR_PE							0
+#define USART_SR_FE							1
+#define USART_SR_NF							2
+#define USART_SR_ORE						3
+#define USART_SR_IDLE						4
+#define USART_SR_RXNE						5
+#define USART_SR_TC							6
+#define USART_SR_TXE						7
+#define USART_SR_LBD						8
+#define USART_SR_CTS						9
+
+/*
+ * Bit position definitions of USART_BRR
+ */
+#define USART_BRR_DIV_FRACTION				0
+#define USART_BRR_DIV_MANTISSA				4
+
+/*
+ * Bit position definitions of USART_GTPR
+ */
+#define USART_GTPR_PSC						0
+#define USART_GTPR_GT						8
 
 //Include driver files
 #include "stm32f446xx_gpio_driver.h"
-
+#include "stm32f446xx_spi_driver.h"
+#include "stm32f446xx_i2c_driver.h"
+#include "stm32f446xx_usart_driver.h"
+#include "stm32f446xx_rcc_driver.h"
 
 #endif /* INC_STM32F446XX_H_ */

@@ -1,0 +1,199 @@
+/*
+ * stm32f446xx_usart_driver.c
+ *
+ *  Created on: 08-Apr-2021
+ *      Author: DELL
+ */
+
+#include "stm32f446xx_usart_driver.h"
+
+void USART_PeriClockControl(USART_RegDef_t *pUSARTx, uint8_t EnorDi)
+{
+	if (EnorDi == ENABLE)
+	{
+		if (pUSARTx == USART1)
+		{
+			USART1_PCLK_EN();
+		}
+		else if (pUSARTx == USART2)
+		{
+			USART2_PCLK_EN();
+		}
+		else if (pUSARTx == USART3)
+		{
+			USART3_PCLK_EN();
+		}
+		else if (pUSARTx == UART4)
+		{
+			UART4_PCLK_EN();
+		}
+		else if(pUSARTx == UART5)
+		{
+			UART5_PCLK_EN();
+		}
+		else if(pUSARTx == USART6)
+		{
+			USART6_PCLK_EN();
+		}
+	}
+
+	else
+	{
+		if (pUSARTx == USART1)
+		{
+			USART1_PCLK_DI();
+		}
+		else if (pUSARTx == USART2)
+		{
+			USART2_PCLK_DI();
+		}
+		else if (pUSARTx == USART3)
+		{
+			USART3_PCLK_DI();
+		}
+		else if (pUSARTx == UART4)
+		{
+			UART4_PCLK_DI();
+		}
+		else if(pUSARTx == UART5)
+		{
+			UART5_PCLK_DI();
+		}
+		else if(pUSARTx == USART6)
+		{
+			USART6_PCLK_DI();
+		}
+	}
+}
+
+void USART_PeripheralControl(USART_RegDef_t *pUSARTx, uint8_t EnorDi)
+{
+	if(EnorDi == ENABLE)
+	{
+		pUSARTx->CR1 |= (1 << USART_CR1_UE);
+	}
+	else
+	{
+		pUSARTx->CR1 &= ~(1 << USART_CR1_UE);
+	}
+}
+
+uint8_t USART_GetFlagStatus(USART_RegDef_t *pUSARTx, uint8_t StausFlagName)
+{
+	if(pUSARTx->SR & StausFlagName)
+	{
+		return FLAG_SET;
+	}
+	else
+	{
+		return FLAG_RESET;
+	}
+}
+
+void USART_DeInit(USART_RegDef_t *pUSARTx)
+{
+	if(pUSARTx == USART1)
+	{
+		USART1_REG_RESET();
+	}
+	else if(pUSARTx == USART2)
+	{
+		USART2_REG_RESET();
+	}
+	else if(pUSARTx == USART3)
+	{
+		USART3_REG_RESET();
+	}
+	else if(pUSARTx == USART6)
+	{
+		USART6_REG_RESET();
+	}
+	else if(pUSARTx == UART4)
+	{
+		UART4_REG_RESET();
+	}
+	else if(pUSARTx == UART5)
+	{
+		UART5_REG_RESET();
+	}
+
+}
+
+void USART_Init(USART_Handle_t *pUSARTHandle)
+{
+	//Temporary Variable
+	uint32_t tempreg =0;
+
+	/***************************Configuration of CR1 Register*******************************************************/
+
+	//1. Enable clock for USART peripheral
+	USART_PeriClockControl(pUSARTHandle->pUSARTx,ENABLE);
+
+	//Enable the Tx and Rx engines according to the required USART modes
+	if(pUSARTHandle->USART_Config.USART_Mode == USART_MODE_ONLY_RX)
+	{
+		//Enable the receiver bit field
+		pUSARTHandle->pUSARTx->CR1 |= (1 << USART_CR1_RE);
+	}
+}
+
+
+void USART_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi)
+{
+	if(EnorDi == ENABLE)
+	{
+		if(IRQNumber <= 31)
+		{
+			//program ISER0 register
+			*NVIC_ISER0 |= ( 1 << IRQNumber );
+
+		}else if(IRQNumber > 31 && IRQNumber < 64 ) //32 to 63
+		{
+			//program ISER1 register
+			*NVIC_ISER1 |= ( 1 << (IRQNumber % 32) );
+		}
+		else if(IRQNumber >= 64 && IRQNumber < 96 )
+		{
+			//program ISER2 register //64 to 95
+			*NVIC_ISER3 |= ( 1 << (IRQNumber % 64) );
+		}
+	}else
+	{
+		if(IRQNumber <= 31)
+		{
+			//program ICER0 register
+			*NVIC_ICER0 |= ( 1 << IRQNumber );
+		}else if(IRQNumber > 31 && IRQNumber < 64 )
+		{
+			//program ICER1 register
+			*NVIC_ICER1 |= ( 1 << (IRQNumber % 32) );
+		}
+		else if(IRQNumber >= 64 && IRQNumber < 96 )
+		{
+			//program ICER2 register
+			*NVIC_ICER3 |= ( 1 << (IRQNumber % 64) );
+		}
+	}
+}
+
+
+void USART_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority)
+{
+	uint8_t temp1 = IRQNumber / 4;
+	uint8_t temp2 = IRQNumber % 4;
+
+	NVIC_IPR->IPR[temp1] |= (IRQPriority << ((8*temp2)+4));
+	//NVIC_PR has 8 bits for setting priority of the associated IRQ. Out of this only the higher 4 bits actually set the value.
+	//The lower 4 bits do not have any significance.
+	//E.g: Lets say IRQ number is 0, then into IPR0, the priority value needs to be written into 7:4 and 3:0.
+}
+
+void USART_ClearFlag(USART_RegDef_t *pUSARTx, uint8_t StausFlagName)
+{
+	pUSARTx->SR &= ~(StausFlagName);
+}
+
+__weak void USART_ApplicationEventCallback(USART_Handle_t *pUSARTHandle,uint8_t AppEv)
+{
+
+}
